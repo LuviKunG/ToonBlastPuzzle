@@ -1,0 +1,18 @@
+{
+    "name": "LuviKunG.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9c0e7a64070655f41a883ff27bfea902"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
