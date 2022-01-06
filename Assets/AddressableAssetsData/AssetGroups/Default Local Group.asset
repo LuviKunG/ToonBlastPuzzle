@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: b1d231a5de0c7244c9f14bb223e81d4e
+  m_SerializeEntries:
+  - m_GUID: db6c58464dcd4bd4ab8cf94935955a6a
+    m_Address: Assets/Contents/Sprites/Gems/Default/Purple.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: a7505b9813747904b9a2922c614985e2
+    m_Address: Assets/Contents/Sprites/Gems/Default/Yellow.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 765465759f078d44db2f9b5f168b33bc
+    m_Address: Assets/Contents/Sprites/Gems/Default/Red.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 3a61060c676e89c47a95dafdee66556a
+    m_Address: Assets/Contents/Sprites/Gems/Default/White.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 67cd01835e17a034590b295e7e4f24aa
+    m_Address: Assets/Contents/Sprites/Gems/Default/Orange.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: b9b0cf2eb042af74ba3f4a2d24fceb0e
+    m_Address: Assets/Contents/Sprites/Gems/Default/Green.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: d618ea09b6791a6409de99cbcc131e01
+    m_Address: Assets/Contents/Sprites/Gems/Default/Blue.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 92accfccb4c999c42961fcb083e2406d
+    m_Address: Assets/Contents/Sprites/Gems/Default/Bomb.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 7933bce6a35b9cb43a1e856d74c6ab0a
+    m_Address: Assets/Contents/Sprites/Gems/Default/Horizontal.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: e0d34b67e6528714db5ea6fb084b452c
+    m_Address: Assets/Contents/Sprites/Gems/Default/Vertical.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  - m_GUID: 339e2f43e777f614e81bf2cd631c1dbc
+    m_Address: Assets/Contents/Prefabs/UI/UIGem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - default
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 5d66cbee2faeb704a82549fa9a3d1fb0, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 91fcc45d59a01954d88b1896e7055b2b, type: 2}
+    - {fileID: 11400000, guid: 7a69c9e300ecd614da1e7a19cb8474a3, type: 2}
