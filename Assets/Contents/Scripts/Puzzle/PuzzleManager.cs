@@ -1,4 +1,5 @@
 ﻿using LuviKunG.Attribute;
+using System.Collections;
 using UnityEngine;
 
 namespace ToonBlastPuzzle
@@ -6,11 +7,11 @@ namespace ToonBlastPuzzle
     public sealed class PuzzleManager : MonoBehaviour
     {
         [Header("Configurations")]
-        [SerializeField, ScriptableObjectField(typeof(PuzzleSettings))]
+        [SerializeField, AssetField]
         private PuzzleSettings settings = default;
-        [SerializeField, ScriptableObjectField(typeof(PuzzleGemRandomizer))]
+        [SerializeField, AssetField]
         private PuzzleGemRandomizer gemRandomizer = default;
-        [SerializeField, ScriptableObjectField(typeof(PuzzleGemStyles))]
+        [SerializeField, AssetField]
         private PuzzleGemStyles gemStyle = default;
 
         [Header("References")]
@@ -19,9 +20,12 @@ namespace ToonBlastPuzzle
 
         public GemData[,] gems = null;
 
-        public void Initialize()
+        public IEnumerator InitializeAsync()
         {
-            gemRandomizer.Initialize();
+            yield return gemRandomizer.InitializeAsync();
+            yield return gemStyle.InitializeAsync();
+            gemLayout.button.SetPrefabGem(gemStyle.prefabGem);
+            yield break;
         }
 
         public void CreatePuzzle()

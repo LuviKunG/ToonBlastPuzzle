@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f266f24a7967e8941b6c8d205ccbce18, type: 3}
-  m_Name: PuzzleGemStyleDefault
+  m_Script: {fileID: 11500000, guid: 09c87b6723f6da44ab0e848997bf01e3, type: 3}
+  m_Name: 002
   m_EditorClassIdentifier: 
-  _gemSize: 50
-  assetRefPrefabGem:
-    m_AssetGUID: 339e2f43e777f614e81bf2cd631c1dbc
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  m_width: 8
+  m_height: 8
+  m_patternFlatter: 00000101010100000001010101010100010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101

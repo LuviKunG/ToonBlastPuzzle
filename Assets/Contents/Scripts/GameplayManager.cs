@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace ToonBlastPuzzle
@@ -7,13 +8,12 @@ namespace ToonBlastPuzzle
         [SerializeField]
         private PuzzleManager puzzleManager;
 
-        private void Awake()
+        private IEnumerator Start()
         {
-            puzzleManager.Initialize();
-        }
-
-        private void Start()
-        {
+            // Waiting for next frame for let unity finish scene load.
+            yield return null;
+            // Initialize.
+            yield return puzzleManager.InitializeAsync();
             puzzleManager.CreatePuzzle();
         }
     }

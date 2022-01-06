@@ -121,8 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9056178345302234166}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8616c7bb042aa145b7495cd25e8278c, type: 3}
+  m_Script: {fileID: 11500000, guid: ce77f78adf5fbf744b1aa4d984a4b496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 6088483221284317551}
-  imageGem: {fileID: 3985337568633991033}

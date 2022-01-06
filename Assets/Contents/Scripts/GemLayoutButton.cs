@@ -15,14 +15,19 @@ namespace ToonBlastPuzzle
         private RectTransform rectTransformGem = default;
 
         [Header("Prefabs")]
-        [SerializeField, PrefabField(typeof(UIGem))]
-        private UIGem prefabGem = default;
-        [SerializeField, PrefabField(typeof(UIGemButton))]
+        [SerializeField, AssetField]
         private UIGemButton prefabGemButton = default;
 
         private Vector2 gemSize;
 
         public UIGemButton[,] buttons = null;
+
+        private UIGem prefabGem;
+
+        public void SetPrefabGem(UIGem prefab)
+        {
+            prefabGem = prefab;
+        }
 
         public void SetGemSize(float size)
         {

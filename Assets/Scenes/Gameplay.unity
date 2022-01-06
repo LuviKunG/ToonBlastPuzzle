@@ -391,7 +391,6 @@ MonoBehaviour:
   _rectTransform: {fileID: 1064167824}
   gridLayoutGroup: {fileID: 1064167827}
   rectTransformGem: {fileID: 1577251856}
-  prefabGem: {fileID: 4909369647434156984, guid: 339e2f43e777f614e81bf2cd631c1dbc, type: 3}
   prefabGemButton: {fileID: 3212046778884881636, guid: 3361afc81f67eaf41900346d6de6730a, type: 3}
 --- !u!114 &1064167826
 MonoBehaviour:

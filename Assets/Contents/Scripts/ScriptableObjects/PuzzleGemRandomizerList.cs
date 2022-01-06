@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace ToonBlastPuzzle
 {
@@ -8,9 +9,10 @@ namespace ToonBlastPuzzle
         [SerializeField]
         private GemColor[] availableColors;
 
-        public override void Initialize()
+        public override IEnumerator InitializeAsync()
         {
-            // Do nothing! this class don't want to be initialize.
+            // Nothing need to initialize in this class.
+            yield break;
         }
 
         public override void RandomizeGem(ref GemData[,] gems, out GemData gem)
