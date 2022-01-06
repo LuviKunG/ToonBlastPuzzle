@@ -75,11 +75,13 @@ namespace ToonBlastPuzzle
             }
         }
 
+#if UNITY_EDITOR
         protected override void OnValidate()
         {
             base.OnValidate();
             if (gridLayoutGroup == null)
                 gridLayoutGroup = GetComponent<GridLayoutGroup>();
         }
+#endif
     }
 }
