@@ -12,11 +12,13 @@ namespace LuviKunG.UI
         private RectTransform _rectTransform;
         public ref RectTransform rectTransform => ref _rectTransform;
 
+#if UNITY_EDITOR
         protected override void OnValidate()
         {
             base.OnValidate();
             _rectTransform = GetComponent<RectTransform>();
         }
+#endif
 
         protected override void OnTransformParentChanged()
         {
