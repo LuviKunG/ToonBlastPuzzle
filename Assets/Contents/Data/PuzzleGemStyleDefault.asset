@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f266f24a7967e8941b6c8d205ccbce18, type: 3}
   m_Name: PuzzleGemStyleDefault
   m_EditorClassIdentifier: 
-  _gemSize: 50
+  _gemSize: 80
   assetRefPrefabGem:
     m_AssetGUID: 339e2f43e777f614e81bf2cd631c1dbc
     m_SubObjectName: 

@@ -125,3 +125,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 6088483221284317551}
+  imageSprite: {fileID: 3985337568633991033}
+  listColor:
+  - color: 1
+    sprite: {fileID: 21300000, guid: 765465759f078d44db2f9b5f168b33bc, type: 3}
+  - color: 2
+    sprite: {fileID: 21300000, guid: b9b0cf2eb042af74ba3f4a2d24fceb0e, type: 3}
+  - color: 3
+    sprite: {fileID: 21300000, guid: d618ea09b6791a6409de99cbcc131e01, type: 3}
+  - color: 4
+    sprite: {fileID: 21300000, guid: a7505b9813747904b9a2922c614985e2, type: 3}
+  - color: 5
+    sprite: {fileID: 21300000, guid: db6c58464dcd4bd4ab8cf94935955a6a, type: 3}
+  - color: 6
+    sprite: {fileID: 21300000, guid: 3a61060c676e89c47a95dafdee66556a, type: 3}
+  - color: 7
+    sprite: {fileID: 21300000, guid: 67cd01835e17a034590b295e7e4f24aa, type: 3}
+  spritePowerHorizontal: {fileID: 21300000, guid: 7933bce6a35b9cb43a1e856d74c6ab0a, type: 3}
+  spritePowerVertical: {fileID: 21300000, guid: e0d34b67e6528714db5ea6fb084b452c, type: 3}
+  spritePowerAxis: {fileID: 21300000, guid: 92accfccb4c999c42961fcb083e2406d, type: 3}
+  spritePowerGroup: {fileID: 21300000, guid: 92accfccb4c999c42961fcb083e2406d, type: 3}
+  listPowerColor:
+  - color: 1
+    sprite: {fileID: 21300000, guid: 765465759f078d44db2f9b5f168b33bc, type: 3}
+  - color: 2
+    sprite: {fileID: 21300000, guid: b9b0cf2eb042af74ba3f4a2d24fceb0e, type: 3}
+  - color: 3
+    sprite: {fileID: 21300000, guid: d618ea09b6791a6409de99cbcc131e01, type: 3}
+  - color: 4
+    sprite: {fileID: 21300000, guid: a7505b9813747904b9a2922c614985e2, type: 3}
+  - color: 5
+    sprite: {fileID: 21300000, guid: db6c58464dcd4bd4ab8cf94935955a6a, type: 3}
+  - color: 6
+    sprite: {fileID: 21300000, guid: 3a61060c676e89c47a95dafdee66556a, type: 3}
+  - color: 7
+    sprite: {fileID: 21300000, guid: 67cd01835e17a034590b295e7e4f24aa, type: 3}

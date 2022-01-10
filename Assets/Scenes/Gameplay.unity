@@ -272,11 +272,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 806967571}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62f1fdc6af701264d9caea72b9ac88f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 6515ad573d0e3a248b6e5d9f827da95c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 806967572}
-  gemLayoutButton: {fileID: 1064167825}
+  gridLayoutGroup: {fileID: 1064167827}
+  m_rectTransformGem: {fileID: 1577251856}
+  m_rectTransformButton: {fileID: 1064167824}
+  prefabGemButton: {fileID: 3212046778884881636, guid: 3361afc81f67eaf41900346d6de6730a, type: 3}
 --- !u!1 &996306099
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,7 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac30d7bca8d28e42a5ef0380a48b84d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  settings: {fileID: 11400000, guid: 0e515020f523e0c4ba2460f74c1a3e88, type: 2}
+  levelData: {fileID: 11400000, guid: 6cbbe0a4bb9ba0d4bb2de53d2d72a5fe, type: 2}
   gemRandomizer: {fileID: 11400000, guid: 800972b723ac05b4da21a697feab3060, type: 2}
   gemStyle: {fileID: 11400000, guid: 2137c935980663c48986388c12333355, type: 2}
   gemLayout: {fileID: 806967574}
@@ -390,7 +393,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 1064167824}
   gridLayoutGroup: {fileID: 1064167827}
-  rectTransformGem: {fileID: 1577251856}
+  m_rectTransformGem: {fileID: 0}
+  m_rectTransformButton: {fileID: 0}
   prefabGemButton: {fileID: 3212046778884881636, guid: 3361afc81f67eaf41900346d6de6730a, type: 3}
 --- !u!114 &1064167826
 MonoBehaviour:
@@ -427,7 +431,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 0, y: 0}
-  m_Spacing: {x: 10, y: 10}
+  m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 1
 --- !u!1 &1577251855
@@ -463,7 +467,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1856104435
 GameObject:
@@ -601,7 +605,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_BackGroundColor: {r: 0.18039216, g: 0.13725491, b: 0.21960784, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

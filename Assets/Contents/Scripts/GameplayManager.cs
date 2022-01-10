@@ -12,8 +12,9 @@ namespace ToonBlastPuzzle
         {
             // Waiting for next frame for let unity finish scene load.
             yield return null;
-            // Initialize.
+            // Initialize (Async).
             yield return puzzleManager.InitializeAsync();
+            // Execution.
             puzzleManager.CreatePuzzle();
         }
     }

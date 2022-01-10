@@ -1,4 +1,5 @@
 ﻿using LuviKunG.Attribute;
+using LuviKunG.Pooling;
 using System.Collections;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace ToonBlastPuzzle
     {
         [Header("Configurations")]
         [SerializeField, AssetField]
-        private PuzzleSettings settings = default;
+        private PuzzleLevelData levelData = default;
         [SerializeField, AssetField]
         private PuzzleGemRandomizer gemRandomizer = default;
         [SerializeField, AssetField]
@@ -18,39 +19,86 @@ namespace ToonBlastPuzzle
         [SerializeField]
         private GemLayout gemLayout = default;
 
-        public GemData[,] gems = null;
+        public GemSlot[,] gems = null;
+
+        public PoolObject<GemSlot> poolGemSlot;
+        public PoolObject<UIGem> poolUIGem;
 
         public IEnumerator InitializeAsync()
         {
+            poolGemSlot = new PoolObject<GemSlot>((index) =>
+            {
+                GemSlot gemSlot = new GemSlot();
+                gemSlot.isPoolActive = false;
+                return gemSlot;
+            });
+            poolUIGem = new PoolObject<UIGem>((index) =>
+            {
+                UIGem gem = Instantiate(gemStyle.prefabGem, gemLayout.rectTranformGem);
+                gem.isPoolActive = false;
+                gem.name = $"Gem ({index})";
+                gem.rectTransform.sizeDelta = new Vector2(gemStyle.gemSize, gemStyle.gemSize);
+                return gem;
+            });
+            gemLayout.Initialize(gemStyle.gemSize);
             yield return gemRandomizer.InitializeAsync();
             yield return gemStyle.InitializeAsync();
-            gemLayout.button.SetPrefabGem(gemStyle.prefabGem);
-            yield break;
         }
 
+        /// <summary>
+        /// Create an puzzle depend on level data and gem randomizer.
+        /// </summary>
         public void CreatePuzzle()
         {
-            gems = new GemData[settings.width, settings.height];
-            gemLayout.button.SetGemSize(gemStyle.gemSize);
-            gemLayout.button.SetLayoutSize(settings.width, settings.height);
-            RandomAllGems(ref gems);
-        }
-
-        private void RandomAllGems(ref GemData[,] gems)
-        {
+            bool[,] pattern = levelData.GetPattern();
+            gems = new GemSlot[levelData.width, levelData.height];
             for (int y = 0; y < gems.GetLength(1); ++y)
             {
                 for (int x = 0; x < gems.GetLength(0); ++x)
                 {
-                    gemRandomizer.RandomizeGem(ref gems, out GemData gemData);
-                    gems[x, y] = gemData;
+                    GemSlot gemSlot = poolGemSlot.Pick();
+                    gemSlot.isPoolActive = true;
+                    gemSlot.isAvailable = pattern[x, y];
+                    gems[x, y] = gemSlot;
+                }
+            }
+            gemLayout.CreateLayout(ref gems);
+            RandomAllGems(ref gems);
+            InitialPositionGem(ref gems);
+        }
+
+        /// <summary>
+        /// Random all gems in all available slots.
+        /// </summary>
+        /// <param name="slots">Gem Slots.</param>
+        private void RandomAllGems(ref GemSlot[,] slots)
+        {
+            for (int y = 0; y < slots.GetLength(1); ++y)
+            {
+                for (int x = 0; x < slots.GetLength(0); ++x)
+                {
+                    if (slots[x, y].isAvailable)
+                        gemRandomizer.RandomizeGem(ref slots, out slots[x, y].gemData);
                 }
             }
         }
-    }
 
-    public abstract class PuzzleRuleBase : ScriptableObject
-    {
-
+        private void InitialPositionGem(ref GemSlot[,] slots)
+        {
+            for (int y = 0; y < slots.GetLength(1); ++y)
+            {
+                for (int x = 0; x < slots.GetLength(0); ++x)
+                {
+                    if (slots[x, y].isAvailable)
+                    {
+                        UIGem gem = poolUIGem.Pick();
+                        gem.isPoolActive = true;
+                        gem.rectTransform.SetAsFirstSibling();
+                        gem.SetGem(ref slots[x, y].gemData);
+                        gem.SetPosition(gemLayout.buttons[x, y].rectTransform.position);
+                    }
+                }
+            }
+        }
     }
 }

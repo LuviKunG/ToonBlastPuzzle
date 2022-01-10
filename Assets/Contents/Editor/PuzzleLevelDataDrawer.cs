@@ -29,7 +29,8 @@ namespace ToonBlastPuzzle
         {
             VisualElement visualElement = new VisualElement();
             ScrollView scrollView = new ScrollView(ScrollViewMode.Vertical);
-            IMGUIContainer imguiContainer = new IMGUIContainer(() =>
+            GroupBox groupBoxSettings = new GroupBox("Settings");
+            IMGUIContainer imguiContainerSettings = new IMGUIContainer(() =>
             {
                 using (new GUILayout.VerticalScope())
                 {
@@ -39,30 +40,81 @@ namespace ToonBlastPuzzle
                         sWidth.intValue = uWidth > 0 ? uWidth : 1;
                         int uHeight = EditorGUILayout.IntField("Height", sHeight.intValue);
                         sHeight.intValue = uHeight > 0 ? uHeight : 1;
-                        if (GUILayout.Button("Update"))
+                        if (GUILayout.Button("Update Size"))
                             sPattern.arraySize = sWidth.intValue * sHeight.intValue;
-                        using (new GUILayout.VerticalScope())
+                        if (changeCheckScope.changed)
+                            serializedObject.ApplyModifiedProperties();
+                    }
+                }
+            });
+            groupBoxSettings.Add(imguiContainerSettings);
+            GroupBox groupBoxGemFieldEditor = new GroupBox();
+            IMGUIContainer imguiContainerFieldEditor = new IMGUIContainer(() =>
+            {
+                using (new GUILayout.VerticalScope())
+                {
+                    using (var changeCheckScope = new EditorGUI.ChangeCheckScope())
+                    {
+                        if (sPattern.arraySize == sWidth.intValue * sHeight.intValue)
                         {
-                            for (int y = 0; y < sHeight.intValue; ++y)
+                            using (new GUILayout.VerticalScope())
                             {
-                                using (new GUILayout.HorizontalScope())
+                                for (int y = 0; y < sHeight.intValue; ++y)
                                 {
-                                    GUILayout.FlexibleSpace();
-                                    for (int x = 0; x < sWidth.intValue; ++x)
+                                    using (new GUILayout.HorizontalScope())
                                     {
-                                        var sValue = sPattern.GetArrayElementAtIndex(y * sWidth.intValue + x);
-                                        sValue.boolValue = GUILayout.Toggle(sValue.boolValue, GUIContent.none);
+                                        GUILayout.FlexibleSpace();
+                                        for (int x = 0; x < sWidth.intValue; ++x)
+                                        {
+                                            var sValue = sPattern.GetArrayElementAtIndex(y * sWidth.intValue + x);
+                                            sValue.boolValue = GUILayout.Toggle(sValue.boolValue, GUIContent.none);
+                                        }
+                                        GUILayout.FlexibleSpace();
                                     }
-                                    GUILayout.FlexibleSpace();
                                 }
                             }
+                            GUILayout.Space(16.0f);
+                            using (new GUILayout.HorizontalScope())
+                            {
+                                if (GUILayout.Button("Select All"))
+                                {
+                                    for (int i = 0; i < sPattern.arraySize; ++i)
+                                    {
+                                        var sValue = sPattern.GetArrayElementAtIndex(i);
+                                        sValue.boolValue = true;
+                                    }
+                                }
+                                if (GUILayout.Button("Deselect All"))
+                                {
+                                    for (int i = 0; i < sPattern.arraySize; ++i)
+                                    {
+                                        var sValue = sPattern.GetArrayElementAtIndex(i);
+                                        sValue.boolValue = false;
+                                    }
+                                }
+                                if (GUILayout.Button("Inverse All"))
+                                {
+                                    for (int i = 0; i < sPattern.arraySize; ++i)
+                                    {
+                                        var sValue = sPattern.GetArrayElementAtIndex(i);
+                                        sValue.boolValue = !sValue.boolValue;
+                                    }
+                                }
+                                GUILayout.FlexibleSpace();
+                            }
+                        }
+                        else
+                        {
+                            EditorGUILayout.HelpBox("Cannot display the gem field editor because of size is invalid.\nPlease update size at first", MessageType.Error, true);
                         }
                         if (changeCheckScope.changed)
                             serializedObject.ApplyModifiedProperties();
                     }
                 }
             });
-            scrollView.Add(imguiContainer);
+            groupBoxGemFieldEditor.Add(imguiContainerFieldEditor);
+            scrollView.Add(groupBoxSettings);
+            scrollView.Add(groupBoxGemFieldEditor);
             visualElement.Add(scrollView);
             return visualElement;
         }

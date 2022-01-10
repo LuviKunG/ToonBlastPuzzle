@@ -15,7 +15,7 @@ namespace ToonBlastPuzzle
             yield break;
         }
 
-        public override void RandomizeGem(ref GemData[,] gems, out GemData gem)
+        public override void RandomizeGem(ref GemSlot[,] gems, out GemData gem)
         {
             gem = new GemData();
             gem.color = GetRandomColor();
