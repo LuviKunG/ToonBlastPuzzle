@@ -1,13 +1,12 @@
 using LuviKunG.Attribute;
 using LuviKunG.Pooling;
 using LuviKunG.UI;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace ToonBlastPuzzle
 {
-    public class GemLayout : UIBehaviourBase
+    public sealed class UIGemLayout : UIBehaviourBase
     {
         public delegate void OnGemSelectionDelegate(int x, int y);
 

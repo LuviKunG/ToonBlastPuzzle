@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 6088483221284317551}
   - component: {fileID: 4909369647434156984}
   m_Layer: 5
-  m_Name: UIGem
+  m_Name: UIGemDefault
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

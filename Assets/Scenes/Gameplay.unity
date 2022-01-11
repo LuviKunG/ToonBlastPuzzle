@@ -370,6 +370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 738248910}
   - component: {fileID: 738248911}
+  - component: {fileID: 738248912}
   m_Layer: 5
   m_Name: Score
   m_TagString: Untagged
@@ -424,6 +425,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &738248912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 738248909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ba9942cdb39c84184e16542b5e1eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 738248910}
+  m_textValue: {fileID: 780299412}
 --- !u!1 &780299410
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,7 +620,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 806967571}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6515ad573d0e3a248b6e5d9f827da95c, type: 3}
+  m_Script: {fileID: 11500000, guid: 1dabc6be4cc4f2643b948ad878f03558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 806967572}
@@ -670,11 +685,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ac30d7bca8d28e42a5ef0380a48b84d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelData: {fileID: 11400000, guid: 9f7c2445f1650b04ba9ec08f5aca2c73, type: 2}
+  levelData: {fileID: 11400000, guid: 7f3d1aa682753f04d9e19b06215df335, type: 2}
   comboRule: {fileID: 11400000, guid: dc428bf64b794ef48a756ad893529b67, type: 2}
-  gemRandomizer: {fileID: 11400000, guid: 800972b723ac05b4da21a697feab3060, type: 2}
+  scoreCalculation: {fileID: 11400000, guid: 1d187fc1a9c2f9a4696ccebbe76f4bd8, type: 2}
+  gemRandomizer: {fileID: 11400000, guid: e5e974b21b5ba0248a4846217c39e181, type: 2}
   gemStyle: {fileID: 11400000, guid: 2137c935980663c48986388c12333355, type: 2}
-  gemLayout: {fileID: 806967574}
+  uiGemLayout: {fileID: 806967574}
+  uiScore: {fileID: 738248912}
 --- !u!1 &1064167823
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,7 +701,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1064167824}
-  - component: {fileID: 1064167825}
   - component: {fileID: 1064167827}
   - component: {fileID: 1064167826}
   m_Layer: 5
@@ -713,23 +729,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1064167825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1064167823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6515ad573d0e3a248b6e5d9f827da95c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rectTransform: {fileID: 1064167824}
-  gridLayoutGroup: {fileID: 1064167827}
-  m_rectTransformGem: {fileID: 0}
-  m_rectTransformButton: {fileID: 0}
-  prefabGemButton: {fileID: 3212046778884881636, guid: 3361afc81f67eaf41900346d6de6730a, type: 3}
 --- !u!114 &1064167826
 MonoBehaviour:
   m_ObjectHideFlags: 0

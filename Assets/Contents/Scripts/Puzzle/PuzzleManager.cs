@@ -6,11 +6,6 @@ using UnityEngine;
 
 namespace ToonBlastPuzzle
 {
-    public abstract class PuzzleScoreCalculationBase : ScriptableObject
-    {
-        public abstract int CalculateScore(ref List<GemSlot> list);
-    }
-
     public sealed class PuzzleManager : MonoBehaviour
     {
         [Header("Configurations")]
@@ -19,13 +14,17 @@ namespace ToonBlastPuzzle
         [SerializeField, AssetField]
         private PuzzleComboRuleBase comboRule = default;
         [SerializeField, AssetField]
+        private PuzzleScoreCalculationBase scoreCalculation = default;
+        [SerializeField, AssetField]
         private PuzzleGemRandomizer gemRandomizer = default;
         [SerializeField, AssetField]
         private PuzzleGemStyles gemStyle = default;
 
         [Header("References")]
         [SerializeField]
-        private GemLayout gemLayout = default;
+        private UIGemLayout uiGemLayout = default;
+        [SerializeField]
+        private UIGameplayScore uiScore = default;
 
         public GemSlot[,] gems = null;
 
@@ -34,8 +33,11 @@ namespace ToonBlastPuzzle
 
         private List<GemData> comboResolveGems;
 
+        private int m_currentScore;
+
         public IEnumerator InitializeAsync()
         {
+            m_currentScore = 0;
             comboResolveGems = new List<GemData>();
             poolGemSlot = new PoolObject<GemSlot>((index) =>
             {
@@ -45,20 +47,23 @@ namespace ToonBlastPuzzle
             });
             poolUIGem = new PoolObject<UIGem>((index) =>
             {
-                UIGem gem = Instantiate(gemStyle.prefabGem, gemLayout.rectTranformGem);
+                UIGem gem = Instantiate(gemStyle.prefabGem, uiGemLayout.rectTranformGem);
                 gem.isPoolActive = false;
                 gem.name = $"Gem ({index})";
                 gem.rectTransform.sizeDelta = new Vector2(gemStyle.gemSize, gemStyle.gemSize);
                 return gem;
             });
-            gemLayout.Initialize(gemStyle.gemSize);
-            gemLayout.onGemSelected = (x, y) =>
+            uiGemLayout.Initialize(gemStyle.gemSize);
+            uiGemLayout.onGemSelected = (x, y) =>
             {
                 List<GemDissolveData> dissolves = new List<GemDissolveData>();
                 dissolves.Add(new GemDissolveData(gems[x, y]));
+                int dissolveCombo = 0;
                 do
                 {
                     List<GemSlot> dissolveSlots = comboRule.GetCombo(ref gems, ref comboResolveGems, dissolves[0]);
+                    m_currentScore += scoreCalculation.CalculateScore(ref dissolveSlots, ++dissolveCombo);
+                    uiScore.SetScore(m_currentScore);
                     if (dissolveSlots != null && dissolveSlots.Count > 0)
                     {
                         for (int i = 0; i < dissolveSlots.Count; ++i)
@@ -74,6 +79,7 @@ namespace ToonBlastPuzzle
                 DropDownGems(ref gems);
                 GenerateNewGems(ref gems, ref comboResolveGems);
             };
+            uiScore.SetScore(m_currentScore);
             yield return gemRandomizer.InitializeAsync();
             yield return gemStyle.InitializeAsync();
         }
@@ -95,7 +101,7 @@ namespace ToonBlastPuzzle
                                 if (gems[x, i].IsValid())
                                 {
                                     gems[x, y].SwapGem(gems[x, i]);
-                                    gems[x, y].gem?.Move(gemLayout.buttons[x, y].rectTransform.position);
+                                    gems[x, y].gem?.Move(uiGemLayout.buttons[x, y].rectTransform.position);
                                     break;
                                 }
                                 else
@@ -129,8 +135,8 @@ namespace ToonBlastPuzzle
                         UIGem gem = poolUIGem.Pick();
                         gem.isPoolActive = true;
                         gem.rectTransform.SetAsFirstSibling();
-                        gem.SetPosition(gemLayout.buttons[x, y].rectTransform.position + new Vector3(0, gemStyle.gemSize, 0));
-                        gem.Move(gemLayout.buttons[x, y].rectTransform.position);
+                        gem.SetPosition(uiGemLayout.buttons[x, y].rectTransform.position + new Vector3(0, gemStyle.gemSize, 0));
+                        gem.Move(uiGemLayout.buttons[x, y].rectTransform.position);
                         gems[x, y].gem = gem;
                         spaceSlots.Add(gems[x, y]);
                     }
@@ -164,7 +170,7 @@ namespace ToonBlastPuzzle
                     gems[x, y] = gemSlot;
                 }
             }
-            gemLayout.CreateLayout(ref gems);
+            uiGemLayout.CreateLayout(ref gems);
             RandomAllGems(ref gems);
             InitialPositionGem(ref gems);
         }
@@ -199,7 +205,7 @@ namespace ToonBlastPuzzle
                         UIGem gem = poolUIGem.Pick();
                         gem.isPoolActive = true;
                         gem.rectTransform.SetAsFirstSibling();
-                        gem.SetPosition(gemLayout.buttons[x, y].rectTransform.position);
+                        gem.SetPosition(uiGemLayout.buttons[x, y].rectTransform.position);
                         gems[x, y].gem = gem;
                     }
                 }
