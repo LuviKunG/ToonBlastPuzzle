@@ -3,6 +3,7 @@ using LuviKunG.Pooling;
 using LuviKunG.UI;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 namespace ToonBlastPuzzle
 {
@@ -62,7 +63,7 @@ namespace ToonBlastPuzzle
             int width = gemSlots.GetLength(0), height = gemSlots.GetLength(1);
             buttons = new UIGemButton[width, height];
             if (width <= 0 || height <= 0)
-                throw new GameDevelopmentException("Cannot create gem grid size with negative or zero.");
+                throw new ArgumentException("Cannot create gem grid size with negative or zero.");
             gridLayoutGroup.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
             gridLayoutGroup.constraintCount = width;
             for (int y = 0; y < height; ++y)

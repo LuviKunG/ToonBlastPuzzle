@@ -35,6 +35,10 @@ namespace ToonBlastPuzzle
 
         private int m_currentScore;
 
+        /// <summary>
+        /// Initialize Async of puzzle manager.
+        /// </summary>
+        /// <returns>Yield instruction.</returns>
         public IEnumerator InitializeAsync()
         {
             m_currentScore = 0;
@@ -54,36 +58,16 @@ namespace ToonBlastPuzzle
                 return gem;
             });
             uiGemLayout.Initialize(gemStyle.gemSize);
-            uiGemLayout.onGemSelected = (x, y) =>
-            {
-                List<GemDissolveData> dissolves = new List<GemDissolveData>();
-                dissolves.Add(new GemDissolveData(gems[x, y]));
-                int dissolveCombo = 0;
-                do
-                {
-                    List<GemSlot> dissolveSlots = comboRule.GetCombo(ref gems, ref comboResolveGems, dissolves[0]);
-                    m_currentScore += scoreCalculation.CalculateScore(ref dissolveSlots, ++dissolveCombo);
-                    uiScore.SetScore(m_currentScore);
-                    if (dissolveSlots != null && dissolveSlots.Count > 0)
-                    {
-                        for (int i = 0; i < dissolveSlots.Count; ++i)
-                        {
-                            if (dissolveSlots[i].gemData.power != GemPower.None)
-                                dissolves.Add(new GemDissolveData(dissolveSlots[i]));
-                            dissolveSlots[i].ResetGem();
-                        }
-                    }
-                    dissolves.RemoveAt(0);
-                }
-                while (dissolves.Count > 0);
-                DropDownGems(ref gems);
-                GenerateNewGems(ref gems, ref comboResolveGems);
-            };
+            uiGemLayout.onGemSelected = OnGemSelected;
             uiScore.SetScore(m_currentScore);
             yield return gemRandomizer.InitializeAsync();
             yield return gemStyle.InitializeAsync();
         }
 
+        /// <summary>
+        /// Calculate drop down gems.
+        /// </summary>
+        /// <param name="gems">Reference of gem slots.</param>
         private void DropDownGems(ref GemSlot[,] gems)
         {
             int width = gems.GetLength(0), height = gems.GetLength(1);
@@ -122,6 +106,12 @@ namespace ToonBlastPuzzle
             }
         }
 
+        /// <summary>
+        /// Create new gems in white space.
+        /// Will generate other special power gem when available in gems data.
+        /// </summary>
+        /// <param name="gems">Reference of gem slots.</param>
+        /// <param name="gemsData">Reference of list of GemData.</param>
         private void GenerateNewGems(ref GemSlot[,] gems, ref List<GemData> gemsData)
         {
             List<GemSlot> spaceSlots = new List<GemSlot>();
@@ -178,7 +168,7 @@ namespace ToonBlastPuzzle
         /// <summary>
         /// Random all gems in all available slots.
         /// </summary>
-        /// <param name="gems">Gem Slots.</param>
+        /// <param name="gems">Reference of gem slots.</param>
         private void RandomAllGems(ref GemSlot[,] gems)
         {
             for (int y = 0; y < gems.GetLength(1); ++y)
@@ -194,6 +184,10 @@ namespace ToonBlastPuzzle
             }
         }
 
+        /// <summary>
+        /// Create initial position for gems.
+        /// </summary>
+        /// <param name="gems">Reference of gem slots.</param>
         private void InitialPositionGem(ref GemSlot[,] gems)
         {
             for (int y = 0; y < gems.GetLength(1); ++y)
@@ -210,6 +204,37 @@ namespace ToonBlastPuzzle
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Event binding function for gem button when target coordinate gem is selected by player's input.
+        /// </summary>
+        /// <param name="x">Axis X.</param>
+        /// <param name="y">Axis Y.</param>
+        private void OnGemSelected(int x, int y)
+        {
+            List<GemDissolveData> dissolves = new List<GemDissolveData>();
+            dissolves.Add(new GemDissolveData(gems[x, y]));
+            int dissolveCombo = 0;
+            do
+            {
+                List<GemSlot> dissolveSlots = comboRule.GetCombo(ref gems, ref comboResolveGems, dissolves[0]);
+                m_currentScore += scoreCalculation.CalculateScore(ref dissolveSlots, ++dissolveCombo);
+                uiScore.SetScore(m_currentScore);
+                if (dissolveSlots != null && dissolveSlots.Count > 0)
+                {
+                    for (int i = 0; i < dissolveSlots.Count; ++i)
+                    {
+                        if (dissolveSlots[i].gemData.power != GemPower.None)
+                            dissolves.Add(new GemDissolveData(dissolveSlots[i]));
+                        dissolveSlots[i].ResetGem();
+                    }
+                }
+                dissolves.RemoveAt(0);
+            }
+            while (dissolves.Count > 0);
+            DropDownGems(ref gems);
+            GenerateNewGems(ref gems, ref comboResolveGems);
         }
     }
 }
