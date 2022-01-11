@@ -24,7 +24,7 @@
         /// <summary>
         /// Blast every gems around.
         /// </summary>
-        Group,
+        Bomb,
         /// <summary>
         /// Blast every gems that color is matched.
         /// </summary>

@@ -9,6 +9,8 @@ namespace ToonBlastPuzzle
 {
     public class GemLayout : UIBehaviourBase
     {
+        public delegate void OnGemSelectionDelegate(int x, int y);
+
         [Header("Components")]
         [SerializeField]
         private GridLayoutGroup gridLayoutGroup = default;
@@ -38,6 +40,8 @@ namespace ToonBlastPuzzle
                 gridLayoutGroup.cellSize = new Vector2(m_gemSize, m_gemSize);
             }
         }
+
+        public OnGemSelectionDelegate onGemSelected;
 
         private PoolObject<UIGemButton> poolGemButton;
 
@@ -70,6 +74,9 @@ namespace ToonBlastPuzzle
                     button.name = $"Gem Button [{x}, {y}]";
                     button.isPoolActive = true;
                     button.isAvailable = gemSlots[x, y].isAvailable;
+                    button.x = x;
+                    button.y = y;
+                    button.onButtonGemClicked = OnButtonGemClicked;
                     buttons[x, y] = button;
                 }
             }
@@ -86,6 +93,11 @@ namespace ToonBlastPuzzle
                             Destroy(buttons[x, y]);
                 buttons = null;
             }
+        }
+
+        private void OnButtonGemClicked(UIGemButton gemButton)
+        {
+            onGemSelected?.Invoke(gemButton.x, gemButton.y);
         }
     }
 }

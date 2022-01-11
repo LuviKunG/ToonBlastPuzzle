@@ -4,9 +4,31 @@ namespace ToonBlastPuzzle
 {
     public class GemSlot : IPoolable
     {
-        public UIGem gem;
-        public GemData gemData;
+        private UIGem m_gem;
+        public UIGem gem
+        {
+            get => m_gem;
+            set
+            {
+                m_gem = value;
+                m_gem?.SetGem(ref m_gemData);
+            }
+        }
+
+        private GemData m_gemData;
+        public GemData gemData
+        {
+            get => m_gemData;
+            set
+            {
+                m_gemData = value;
+                m_gem?.SetGem(ref m_gemData);
+            }
+        }
+
         public bool isAvailable;
+        public int x;
+        public int y;
 
         private bool m_isPoolActive;
         public bool isPoolActive
@@ -15,9 +37,25 @@ namespace ToonBlastPuzzle
             set => m_isPoolActive = value;
         }
 
-        public void UpdateGem()
+        public void SwapGem(GemSlot targetGem)
         {
-            gem.SetGem(ref gemData);
+            UIGem cacheGem = m_gem;
+            GemData cacheData = m_gemData;
+            this.gem = targetGem.gem;
+            this.gemData = targetGem.gemData;
+            targetGem.gem = cacheGem;
+            targetGem.gemData = cacheData;
+        }
+
+        public void ResetGem()
+        {
+            m_gem = null;
+            m_gemData.Reset();
+        }
+
+        public bool IsValid()
+        {
+            return isAvailable && m_gemData.IsValid();
         }
     }
 }
