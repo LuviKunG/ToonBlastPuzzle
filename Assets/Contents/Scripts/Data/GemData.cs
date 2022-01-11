@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ToonBlastPuzzle
+﻿namespace ToonBlastPuzzle
 {
     /// <summary>
     /// Gem Data.

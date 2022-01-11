@@ -49,6 +49,8 @@ namespace ToonBlastPuzzle
 
         public void ResetGem()
         {
+            if (m_gem != null)
+                m_gem.isPoolActive = false;
             m_gem = null;
             m_gemData.Reset();
         }

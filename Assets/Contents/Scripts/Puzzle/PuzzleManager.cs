@@ -36,6 +36,7 @@ namespace ToonBlastPuzzle
 
         public IEnumerator InitializeAsync()
         {
+            comboResolveGems = new List<GemData>();
             poolGemSlot = new PoolObject<GemSlot>((index) =>
             {
                 GemSlot gemSlot = new GemSlot();
@@ -53,17 +54,25 @@ namespace ToonBlastPuzzle
             gemLayout.Initialize(gemStyle.gemSize);
             gemLayout.onGemSelected = (x, y) =>
             {
-                List<GemSlot> dissolveSlots = comboRule.GetCombo(ref gems, ref comboResolveGems, x, y);
-                if (dissolveSlots != null && dissolveSlots.Count > 0)
+                List<GemDissolveData> dissolves = new List<GemDissolveData>();
+                dissolves.Add(new GemDissolveData(gems[x, y]));
+                do
                 {
-                    for (int i = 0; i < dissolveSlots.Count; ++i)
+                    List<GemSlot> dissolveSlots = comboRule.GetCombo(ref gems, ref comboResolveGems, dissolves[0]);
+                    if (dissolveSlots != null && dissolveSlots.Count > 0)
                     {
-                        dissolveSlots[i].gem.isPoolActive = false;
-                        dissolveSlots[i].ResetGem();
+                        for (int i = 0; i < dissolveSlots.Count; ++i)
+                        {
+                            if (dissolveSlots[i].gemData.power != GemPower.None)
+                                dissolves.Add(new GemDissolveData(dissolveSlots[i]));
+                            dissolveSlots[i].ResetGem();
+                        }
                     }
-                    DropDownGems(ref gems);
-                    GenerateNewGems(ref gems, ref dissolveSlots, ref comboResolveGems);
+                    dissolves.RemoveAt(0);
                 }
+                while (dissolves.Count > 0);
+                DropDownGems(ref gems);
+                GenerateNewGems(ref gems, ref comboResolveGems);
             };
             yield return gemRandomizer.InitializeAsync();
             yield return gemStyle.InitializeAsync();
@@ -107,7 +116,7 @@ namespace ToonBlastPuzzle
             }
         }
 
-        private void GenerateNewGems(ref GemSlot[,] gems, ref List<GemSlot> dissolveSlots, ref List<GemData> gemsData)
+        private void GenerateNewGems(ref GemSlot[,] gems, ref List<GemData> gemsData)
         {
             List<GemSlot> spaceSlots = new List<GemSlot>();
             int width = gems.GetLength(0), height = gems.GetLength(1);

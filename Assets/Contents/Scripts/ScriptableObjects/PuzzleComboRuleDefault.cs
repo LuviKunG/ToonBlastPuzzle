@@ -13,12 +13,12 @@ namespace ToonBlastPuzzle
         [SerializeField]
         private int m_minimalPowerAxisCount = default;
 
-        public override List<GemSlot> GetCombo(ref GemSlot[,] gems, ref List<GemData> gemsData, int x, int y)
+        public override List<GemSlot> GetCombo(ref GemSlot[,] gems, ref List<GemData> gemsData, GemDissolveData dissolveData)
         {
-            List<GemSlot> slots = new List<GemSlot>();
-            gemsData = new List<GemData>(); 
+            int x = dissolveData.x, y = dissolveData.y;
             int width = gems.GetLength(0), height = gems.GetLength(1);
-            switch (gems[x, y].gemData.power)
+            List<GemSlot> slots = new List<GemSlot>();
+            switch (dissolveData.gemData.power)
             {
                 case GemPower.None:
                     // Dissolve all connected color gems.
@@ -65,7 +65,7 @@ namespace ToonBlastPuzzle
                     slots.Add(gems[x, y]);
                     for (int dy = 0; dy < height; ++dy)
                         for (int dx = 0; dx < width; ++dx)
-                            if (gems[dx, dy].IsValid() && gems[dx, dy].gemData.power == GemPower.None && gems[x, y].gemData.color == gems[dx, dy].gemData.color)
+                            if (gems[dx, dy].IsValid() && gems[dx, dy].gemData.power == GemPower.None && dissolveData.gemData.color == gems[dx, dy].gemData.color)
                                 slots.Add(gems[dx, dy]);
                     return slots;
                 default:
@@ -84,34 +84,18 @@ namespace ToonBlastPuzzle
         /// <param name="height">Height of board.</param>
         private void GetComboColor(ref GemSlot[,] gems, ref List<GemSlot> slots, int x, int y, int width, int height)
         {
-            //if (x - 1 >= 0 && gems[x - 1, y].IsValid() && gems[x, y].gemData.color == gems[x - 1, y].gemData.color && !slots.Contains(gems[x - 1, y]))
-            //{
-            //    slots.Add(gems[x - 1, y]);
-            //    GetComboColor(ref gems, ref slots, x - 1, y, width, height);
-            //}
-            //if (x + 1 < width && gems[x + 1, y].IsValid() && gems[x, y].gemData.color == gems[x + 1, y].gemData.color && !slots.Contains(gems[x + 1, y]))
-            //{
-            //    slots.Add(gems[x + 1, y]);
-            //    GetComboColor(ref gems, ref slots, x + 1, y, width, height);
-            //}
-            //if (y - 1 >= 0 && gems[x, y - 1].IsValid() && gems[x, y].gemData.color == gems[x, y - 1].gemData.color && !slots.Contains(gems[x, y - 1]))
-            //{
-            //    slots.Add(gems[x, y - 1]);
-            //    GetComboColor(ref gems, ref slots, x, y - 1, width, height);
-            //}
-            //if (y + 1 < height && gems[x, y + 1].IsValid() && gems[x, y].gemData.color == gems[x, y + 1].gemData.color && !slots.Contains(gems[x, y + 1]))
-            //{
-            //    slots.Add(gems[x, y + 1]);
-            //    GetComboColor(ref gems, ref slots, x, y + 1, width, height);
-            //}
-            if (x - 1 >= 0 && gems[x, y].gemData.color == gems[x - 1, y].gemData.color && TryDissolveGems(ref gems, ref slots, x - 1, y))
-                GetComboColor(ref gems, ref slots, x - 1, y, width, height);
-            if (x + 1 < width && gems[x, y].gemData.color == gems[x + 1, y].gemData.color && TryDissolveGems(ref gems, ref slots, x + 1, y))
-                GetComboColor(ref gems, ref slots, x + 1, y, width, height);
-            if (y - 1 >= 0 && gems[x, y].gemData.color == gems[x, y - 1].gemData.color && TryDissolveGems(ref gems, ref slots, x, y - 1))
-                GetComboColor(ref gems, ref slots, x, y - 1, width, height);
-            if (y + 1 < height && gems[x, y].gemData.color == gems[x, y + 1].gemData.color && TryDissolveGems(ref gems, ref slots, x, y + 1))
-                GetComboColor(ref gems, ref slots, x, y + 1, width, height);
+            if (x - 1 >= 0 && gems[x, y].gemData.color == gems[x - 1, y].gemData.color && gems[x - 1, y].gemData.power == GemPower.None)
+                if (TryDissolveGems(ref gems, ref slots, x - 1, y))
+                    GetComboColor(ref gems, ref slots, x - 1, y, width, height);
+            if (x + 1 < width && gems[x, y].gemData.color == gems[x + 1, y].gemData.color && gems[x + 1, y].gemData.power == GemPower.None)
+                if (TryDissolveGems(ref gems, ref slots, x + 1, y))
+                    GetComboColor(ref gems, ref slots, x + 1, y, width, height);
+            if (y - 1 >= 0 && gems[x, y].gemData.color == gems[x, y - 1].gemData.color && gems[x, y - 1].gemData.power == GemPower.None)
+                if (TryDissolveGems(ref gems, ref slots, x, y - 1))
+                    GetComboColor(ref gems, ref slots, x, y - 1, width, height);
+            if (y + 1 < height && gems[x, y].gemData.color == gems[x, y + 1].gemData.color && gems[x, y + 1].gemData.power == GemPower.None)
+                if (TryDissolveGems(ref gems, ref slots, x, y + 1))
+                    GetComboColor(ref gems, ref slots, x, y + 1, width, height);
         }
 
         private bool TryDissolveGems(ref GemSlot[,] gems, ref List<GemSlot> slots, int x, int y)
