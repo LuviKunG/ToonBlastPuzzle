@@ -3035,6 +3035,8 @@ MonoBehaviour:
   m_rules:
   - {fileID: 11400000, guid: dc428bf64b794ef48a756ad893529b67, type: 2}
   - {fileID: 11400000, guid: 2a3c1c9328dd0bb47a9bc074b2e8a03a, type: 2}
+  - {fileID: 11400000, guid: 32233aa242cfdc2459f721f92241855b, type: 2}
+  - {fileID: 11400000, guid: 0c3a878ade48aca4881e65f200949f99, type: 2}
   m_scoreCalculations:
   - {fileID: 11400000, guid: 1d187fc1a9c2f9a4696ccebbe76f4bd8, type: 2}
   - {fileID: 11400000, guid: ddc872256f7e0844b854ff5c95a64075, type: 2}

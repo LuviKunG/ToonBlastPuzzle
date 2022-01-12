@@ -32,13 +32,13 @@ namespace ToonBlastPuzzle
                     if (slots.Count >= m_minimalDissolveColorCount)
                     {
                         // If dissolve is success more than m_minimalPowerColorCount, spawn power color with the same color.
-                        if (slots.Count >= m_minimalPowerColorCount)
+                        if (m_minimalPowerColorCount > 0 && slots.Count >= m_minimalPowerColorCount)
                             gemsData.Add(new GemData(slots[0].gemData.color, GemPower.Color));
                         // But if dissolve is success more than m_minimalPowerAxisCount, spawn power axis.
-                        else if (slots.Count >= m_minimalPowerAxisCount)
+                        else if (m_minimalPowerAxisCount > 0 && slots.Count >= m_minimalPowerAxisCount)
                             gemsData.Add(new GemData(GemColor.None, GemPower.Axis));
                         // But if dissolve is success more than m_minimalPowerHorizontalOrVerticalCount, spawn random power horizontal or vertical.
-                        else if (slots.Count >= m_minimalPowerHorizontalOrVerticalCount)
+                        else if (m_minimalPowerHorizontalOrVerticalCount > 0 && slots.Count >= m_minimalPowerHorizontalOrVerticalCount)
                             gemsData.Add(new GemData(GemColor.None, Random.value > 0.5f ? GemPower.Horizontal : GemPower.Vertical));
                         return slots;
                     }

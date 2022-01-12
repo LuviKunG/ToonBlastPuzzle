@@ -13,8 +13,4 @@ MonoBehaviour:
   m_Name: Small
   m_EditorClassIdentifier: 
   _gemSize: 50
-  assetRefPrefabGem:
-    m_AssetGUID: 339e2f43e777f614e81bf2cd631c1dbc
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  _prefabGem: {fileID: 4909369647434156984, guid: 339e2f43e777f614e81bf2cd631c1dbc, type: 3}

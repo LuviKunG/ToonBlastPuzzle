@@ -9,12 +9,6 @@ namespace ToonBlastPuzzle
         [SerializeField]
         private GemColor[] availableColors;
 
-        public override IEnumerator InitializeAsync()
-        {
-            // Nothing need to initialize in this class.
-            yield break;
-        }
-
         public override void RandomizeGem(ref GemSlot[,] gems, out GemData gem)
         {
             gem = new GemData();

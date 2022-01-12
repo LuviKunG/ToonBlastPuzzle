@@ -31,7 +31,7 @@ namespace ToonBlastPuzzle
                 if (m_routineHandlerLoadScene == null)
                     m_routineHandlerLoadScene = StartCoroutine(RoutineLoadScene(m_sceneNameMain));
             });
-            yield return m_puzzleManager.InitializeAsync(m_gameContext);
+            m_puzzleManager.Initialize(m_gameContext);
             // Execution.
             m_puzzleManager.CreatePuzzle();
         }

@@ -13,19 +13,8 @@ namespace ToonBlastPuzzle
         public float gemSize => _gemSize;
 
         [SerializeField]
-        private AssetReference assetRefPrefabGem;
-
         private UIGem _prefabGem;
         public UIGem prefabGem => _prefabGem;
-
-        public IEnumerator InitializeAsync()
-        {
-            AsyncOperationHandle<GameObject> asyncPrefabGem = assetRefPrefabGem.LoadAssetAsync<GameObject>();
-            yield return asyncPrefabGem;
-            _prefabGem = asyncPrefabGem.Result.GetComponent<UIGem>();
-            assetRefPrefabGem.ReleaseAsset();
-            yield break;
-        }
 
 #if UNITY_EDITOR
         private void OnValidate()

@@ -36,10 +36,9 @@ namespace ToonBlastPuzzle
         private int m_currentScore = 0;
 
         /// <summary>
-        /// Initialize Async of puzzle manager.
+        /// Initialize puzzle manager.
         /// </summary>
-        /// <returns>Yield instruction.</returns>
-        public IEnumerator InitializeAsync(GameContext gameContext)
+        public void Initialize(GameContext gameContext)
         {
             level = gameContext.level;
             comboRule = gameContext.comboRule;
@@ -65,8 +64,6 @@ namespace ToonBlastPuzzle
             m_uiGemLayout.Initialize(gemStyle.gemSize);
             m_uiGemLayout.onGemSelected = OnGemSelected;
             m_panelHeader.gameplayScore.SetScore(m_currentScore);
-            yield return gemRandomizer.InitializeAsync();
-            yield return gemStyle.InitializeAsync();
         }
 
         /// <summary>
