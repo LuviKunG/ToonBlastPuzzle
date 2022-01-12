@@ -36,11 +36,16 @@ namespace ToonBlastPuzzle
             // Wait for a frame for unity prepare for rendering.
             yield return null;
             m_gameContext = GameInstance.context;
-            m_gameContext.level = m_levels[0];
-            m_gameContext.comboRule = m_rules[0];
-            m_gameContext.scoreCalculation = m_scoreCalculations[0];
-            m_gameContext.gemRandomizer = m_gemRandomizers[0];
-            m_gameContext.gemStyle = m_gemStyles[0];
+            if (m_gameContext.level == null)
+                m_gameContext.level = m_levels[0];
+            if (m_gameContext.comboRule == null)
+                m_gameContext.comboRule = m_rules[0];
+            if (m_gameContext.scoreCalculation == null)
+                m_gameContext.scoreCalculation = m_scoreCalculations[0];
+            if (m_gameContext.gemRandomizer == null)
+                m_gameContext.gemRandomizer = m_gemRandomizers[0];
+            if (m_gameContext.gemStyle == null)
+                m_gameContext.gemStyle = m_gemStyles[0];
             m_gameSelection.Initialize();
             m_gameSelection.buttonPlay.onClick.AddListener(() =>
             {

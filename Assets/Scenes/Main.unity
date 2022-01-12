@@ -3031,11 +3031,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9f7c2445f1650b04ba9ec08f5aca2c73, type: 2}
   - {fileID: 11400000, guid: 909a6cb09dbf07042affa3e6f09eec81, type: 2}
   - {fileID: 11400000, guid: 6cbbe0a4bb9ba0d4bb2de53d2d72a5fe, type: 2}
+  - {fileID: 11400000, guid: 413af0088c68c1f459c0fe2f1e763961, type: 2}
   m_rules:
   - {fileID: 11400000, guid: dc428bf64b794ef48a756ad893529b67, type: 2}
   - {fileID: 11400000, guid: 2a3c1c9328dd0bb47a9bc074b2e8a03a, type: 2}
-  - {fileID: 11400000, guid: f39dc4fbbbfac654ca14a68d037f5403, type: 2}
-  - {fileID: 11400000, guid: 3e0aa7800a5e4e94dbc980cd32dcdc11, type: 2}
   m_scoreCalculations:
   - {fileID: 11400000, guid: 1d187fc1a9c2f9a4696ccebbe76f4bd8, type: 2}
   - {fileID: 11400000, guid: ddc872256f7e0844b854ff5c95a64075, type: 2}

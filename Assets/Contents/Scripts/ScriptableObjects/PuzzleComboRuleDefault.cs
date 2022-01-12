@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ToonBlastPuzzle
 {
-    [CreateAssetMenu(menuName = "Toon Blast Puzzle/Combo Rules/Default")]
+    [CreateAssetMenu(menuName = "Toon Blast Puzzle/Combo Rules/Default Plus")]
     public sealed class PuzzleComboRuleDefault : PuzzleComboRuleData
     {
         [Header("Configurations")]
@@ -15,6 +15,8 @@ namespace ToonBlastPuzzle
         private int m_minimalPowerColorCount = default;
         [SerializeField]
         private int m_minimalPowerAxisCount = default;
+        [SerializeField]
+        private int m_minimalPowerHorizontalOrVerticalCount = default;
 
         public override List<GemSlot> GetCombo(ref GemSlot[,] gems, ref List<GemData> gemsData, GemDissolveData dissolveData)
         {
@@ -35,6 +37,9 @@ namespace ToonBlastPuzzle
                         // But if dissolve is success more than m_minimalPowerAxisCount, spawn power axis.
                         else if (slots.Count >= m_minimalPowerAxisCount)
                             gemsData.Add(new GemData(GemColor.None, GemPower.Axis));
+                        // But if dissolve is success more than m_minimalPowerHorizontalOrVerticalCount, spawn random power horizontal or vertical.
+                        else if (slots.Count >= m_minimalPowerHorizontalOrVerticalCount)
+                            gemsData.Add(new GemData(GemColor.None, Random.value > 0.5f ? GemPower.Horizontal : GemPower.Vertical));
                         return slots;
                     }
                     else
@@ -62,7 +67,7 @@ namespace ToonBlastPuzzle
                     return slots;
                 case GemPower.Bomb:
                     // Dissolve all gems around target gems.
-                    // TODO: will implement this laterPl.
+                    // TODO: will implement this later.
                     return slots;
                 case GemPower.Color:
                     // Dissolve all same normal color gems.
@@ -122,6 +127,8 @@ namespace ToonBlastPuzzle
                 m_minimalPowerColorCount = 0;
             if (m_minimalPowerAxisCount < 0)
                 m_minimalPowerAxisCount = 0;
+            if (m_minimalPowerHorizontalOrVerticalCount < 0)
+                m_minimalPowerHorizontalOrVerticalCount = 0;
         }
 #endif
     }
