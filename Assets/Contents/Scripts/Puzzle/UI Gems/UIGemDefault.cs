@@ -77,6 +77,12 @@ namespace ToonBlastPuzzle
             isPoolActive = false;
         }
 
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            m_sequenceMovement?.Kill(false);
+        }
+
 #if UNITY_EDITOR
         protected override void OnValidate()
         {
