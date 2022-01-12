@@ -4,10 +4,13 @@ using UnityEngine;
 namespace ToonBlastPuzzle
 {
     [CreateAssetMenu(menuName = "Toon Blast Puzzle/Combo Rules/Default")]
-    public sealed class PuzzleComboRuleDefault : PuzzleComboRuleBase
+    public sealed class PuzzleComboRuleDefault : PuzzleComboRuleData
     {
+        [Header("Configurations")]
         [SerializeField]
         private int m_minimalDissolveColorCount = default;
+
+        [Header("Special Power Combo Count")]
         [SerializeField]
         private int m_minimalPowerColorCount = default;
         [SerializeField]
@@ -59,6 +62,7 @@ namespace ToonBlastPuzzle
                     return slots;
                 case GemPower.Bomb:
                     // Dissolve all gems around target gems.
+                    // TODO: will implement this laterPl.
                     return slots;
                 case GemPower.Color:
                     // Dissolve all same normal color gems.

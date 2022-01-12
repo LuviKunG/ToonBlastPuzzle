@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ToonBlastPuzzle
 {
     [CreateAssetMenu(menuName = "Toon Blast Puzzle/Score Calculation/Default")]
-    public sealed class PuzzleScoreCalculationDefault : PuzzleScoreCalculationBase
+    public sealed class PuzzleScoreCalculationDefault : PuzzleScoreCalculationData
     {
         [SerializeField]
         private int m_scoreBlock;

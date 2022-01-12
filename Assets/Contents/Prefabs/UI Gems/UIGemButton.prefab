@@ -52,6 +52,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rectTransform: {fileID: 470037138096597282}
   isAvailable: 0
+  x: 0
+  y: 0
 --- !u!222 &5814292419256685355
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -81,7 +83,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4

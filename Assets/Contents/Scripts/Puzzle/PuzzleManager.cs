@@ -9,38 +9,43 @@ namespace ToonBlastPuzzle
     public sealed class PuzzleManager : MonoBehaviour
     {
         [Header("Configurations")]
-        [SerializeField, AssetField]
-        private PuzzleLevelData levelData = default;
-        [SerializeField, AssetField]
-        private PuzzleComboRuleBase comboRule = default;
-        [SerializeField, AssetField]
-        private PuzzleScoreCalculationBase scoreCalculation = default;
-        [SerializeField, AssetField]
-        private PuzzleGemRandomizer gemRandomizer = default;
-        [SerializeField, AssetField]
-        private PuzzleGemStyles gemStyle = default;
+        [HideInInspector]
+        public PuzzleLevelData level = default;
+        [HideInInspector]
+        public PuzzleComboRuleData comboRule = default;
+        [HideInInspector]
+        public PuzzleScoreCalculationData scoreCalculation = default;
+        [HideInInspector]
+        public PuzzleGemRandomizerData gemRandomizer = default;
+        [HideInInspector]
+        public PuzzleGemStyleData gemStyle = default;
 
         [Header("References")]
         [SerializeField]
-        private UIGemLayout uiGemLayout = default;
+        private UIPanelGameplayHeader m_panelHeader = default;
         [SerializeField]
-        private UIGameplayScore uiScore = default;
+        private UIGemLayout m_uiGemLayout = default;
 
         public GemSlot[,] gems = null;
 
-        public PoolObject<GemSlot> poolGemSlot;
-        public PoolObject<UIGem> poolUIGem;
+        public PoolObject<GemSlot> poolGemSlot = default;
+        public PoolObject<UIGem> poolUIGem = default;
 
-        private List<GemData> comboResolveGems;
+        private List<GemData> comboResolveGems = null;
 
-        private int m_currentScore;
+        private int m_currentScore = 0;
 
         /// <summary>
         /// Initialize Async of puzzle manager.
         /// </summary>
         /// <returns>Yield instruction.</returns>
-        public IEnumerator InitializeAsync()
+        public IEnumerator InitializeAsync(GameContext gameContext)
         {
+            level = gameContext.level;
+            comboRule = gameContext.comboRule;
+            scoreCalculation = gameContext.scoreCalculation;
+            gemRandomizer = gameContext.gemRandomizer;
+            gemStyle = gameContext.gemStyle;
             m_currentScore = 0;
             comboResolveGems = new List<GemData>();
             poolGemSlot = new PoolObject<GemSlot>((index) =>
@@ -51,15 +56,15 @@ namespace ToonBlastPuzzle
             });
             poolUIGem = new PoolObject<UIGem>((index) =>
             {
-                UIGem gem = Instantiate(gemStyle.prefabGem, uiGemLayout.rectTranformGem);
+                UIGem gem = Instantiate(gemStyle.prefabGem, m_uiGemLayout.rectTranformGem);
                 gem.isPoolActive = false;
                 gem.name = $"Gem ({index})";
                 gem.rectTransform.sizeDelta = new Vector2(gemStyle.gemSize, gemStyle.gemSize);
                 return gem;
             });
-            uiGemLayout.Initialize(gemStyle.gemSize);
-            uiGemLayout.onGemSelected = OnGemSelected;
-            uiScore.SetScore(m_currentScore);
+            m_uiGemLayout.Initialize(gemStyle.gemSize);
+            m_uiGemLayout.onGemSelected = OnGemSelected;
+            m_panelHeader.gameplayScore.SetScore(m_currentScore);
             yield return gemRandomizer.InitializeAsync();
             yield return gemStyle.InitializeAsync();
         }
@@ -85,7 +90,7 @@ namespace ToonBlastPuzzle
                                 if (gems[x, i].IsValid())
                                 {
                                     gems[x, y].SwapGem(gems[x, i]);
-                                    gems[x, y].gem?.Move(uiGemLayout.buttons[x, y].rectTransform.position);
+                                    gems[x, y].gem?.Move(m_uiGemLayout.buttons[x, y].rectTransform.position);
                                     break;
                                 }
                                 else
@@ -125,8 +130,8 @@ namespace ToonBlastPuzzle
                         UIGem gem = poolUIGem.Pick();
                         gem.isPoolActive = true;
                         gem.rectTransform.SetAsFirstSibling();
-                        gem.SetPosition(uiGemLayout.buttons[x, y].rectTransform.position + new Vector3(0, gemStyle.gemSize, 0));
-                        gem.Move(uiGemLayout.buttons[x, y].rectTransform.position);
+                        gem.SetPosition(m_uiGemLayout.buttons[x, y].rectTransform.position + new Vector3(0, gemStyle.gemSize, 0));
+                        gem.Move(m_uiGemLayout.buttons[x, y].rectTransform.position);
                         gems[x, y].gem = gem;
                         spaceSlots.Add(gems[x, y]);
                     }
@@ -146,8 +151,8 @@ namespace ToonBlastPuzzle
         /// </summary>
         public void CreatePuzzle()
         {
-            bool[,] pattern = levelData.GetPattern();
-            gems = new GemSlot[levelData.width, levelData.height];
+            bool[,] pattern = level.GetPattern();
+            gems = new GemSlot[level.width, level.height];
             for (int y = 0; y < gems.GetLength(1); ++y)
             {
                 for (int x = 0; x < gems.GetLength(0); ++x)
@@ -160,7 +165,7 @@ namespace ToonBlastPuzzle
                     gems[x, y] = gemSlot;
                 }
             }
-            uiGemLayout.CreateLayout(ref gems);
+            m_uiGemLayout.CreateLayout(ref gems);
             RandomAllGems(ref gems);
             InitialPositionGem(ref gems);
         }
@@ -199,7 +204,7 @@ namespace ToonBlastPuzzle
                         UIGem gem = poolUIGem.Pick();
                         gem.isPoolActive = true;
                         gem.rectTransform.SetAsFirstSibling();
-                        gem.SetPosition(uiGemLayout.buttons[x, y].rectTransform.position);
+                        gem.SetPosition(m_uiGemLayout.buttons[x, y].rectTransform.position);
                         gems[x, y].gem = gem;
                     }
                 }
@@ -220,7 +225,7 @@ namespace ToonBlastPuzzle
             {
                 List<GemSlot> dissolveSlots = comboRule.GetCombo(ref gems, ref comboResolveGems, dissolves[0]);
                 m_currentScore += scoreCalculation.CalculateScore(ref dissolveSlots, ++dissolveCombo);
-                uiScore.SetScore(m_currentScore);
+                m_panelHeader.gameplayScore.SetScore(m_currentScore);
                 if (dissolveSlots != null && dissolveSlots.Count > 0)
                 {
                     for (int i = 0; i < dissolveSlots.Count; ++i)

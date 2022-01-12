@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ToonBlastPuzzle
 {
     [CreateAssetMenu(menuName = "Toon Blast Puzzle/Rules Gem Randomizer/List")]
-    public sealed class PuzzleGemRandomizerList : PuzzleGemRandomizer
+    public sealed class PuzzleGemRandomizerList : PuzzleGemRandomizerData
     {
         [SerializeField]
         private GemColor[] availableColors;

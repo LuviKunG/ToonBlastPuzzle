@@ -68,7 +68,7 @@ MonoBehaviour:
     m_SerializedLabels:
     - default
   - m_GUID: 339e2f43e777f614e81bf2cd631c1dbc
-    m_Address: Assets/Contents/Prefabs/UI/UIGem.prefab
+    m_Address: Assets/Contents/Prefabs/Gems/UIGemDefault.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - default
